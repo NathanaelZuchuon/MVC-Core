@@ -44,3 +44,41 @@ form.addEventListener('submit', (event) => {
     request.send(formData);
 });
 /* ************ */
+
+/*
+
+.reveal {
+	opacity: 0;
+	transform: translateY(30px);
+}
+
+.reveal-visible {
+	opacity: 1;
+	trasform: translateY(0);
+	transition: 1s cubic-bezier(.5, 0, 0, 1);
+}
+
+*/
+
+/* Intersection Observer API */
+const ratio = .1;
+const options = {
+	root: null,
+	rootMargin: '0px',
+	threshold: ratio,
+}
+
+const handlerIntersect = (entries, observer) => {
+	entries.forEach( (entry) => {
+		if ( entry.intersectionRatio > ratio ) {
+			entry.target.classList.add('reveal-visible');
+			observer.unobserve(entry.target);
+		}
+	});
+};
+
+const observer = new IntersectionObserver(handlerIntersect, options);
+document.querySelectorAll('.reveal').forEach( (r) => {
+	observer.observe(r);
+});
+/* ************************* */
